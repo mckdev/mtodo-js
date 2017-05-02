@@ -1,8 +1,3 @@
-/* V7 Requirements
-There should be a 'Display todos' and a 'Toggle all' button
-Clicking 'Display todos' should run todoList.displayTodos
-Clicking 'Toggle all' should run todoList.toggleAll */
-
 var todoList = {
 
 	todos: [],
