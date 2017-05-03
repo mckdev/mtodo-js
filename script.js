@@ -1,10 +1,3 @@
-/* V8 Requirements
-+ it should have working controls for .addTodo
-+ it should have working controls for .changeTodo
-- it should have working controls for .deleteTodo
-- it should have working controls for .toggleCompleted
-*/
-
 var todoList = {
 
 	todos: [],
@@ -75,6 +68,7 @@ var todoList = {
 		this.displayTodos();
 	}
 };
+
 
 var handlers = {
 	displayTodos: function() {
