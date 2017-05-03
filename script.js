@@ -1,3 +1,10 @@
+/* V8 Requirements
+- it should have working controls for .addTodo
+- it should have working controls for .changeTodo
+- it should have working controls for .deleteTodo
+- it should have working controls for .toggleCompleted
+*/
+
 var todoList = {
 
 	todos: [],
@@ -75,5 +82,10 @@ var handlers = {
 	},
 	toggleAll: function() {
 		todoList.toggleAll();
+	},
+	addTodo: function() {
+		var addTodoTextInput = document.getElementById('addTodoTextInput');
+		todoList.addTodo(addTodoTextInput.value);
+		addTodoTextInput.value = '';
 	}
 };
