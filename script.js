@@ -1,6 +1,6 @@
 /* V8 Requirements
-- it should have working controls for .addTodo
-- it should have working controls for .changeTodo
++ it should have working controls for .addTodo
++ it should have working controls for .changeTodo
 - it should have working controls for .deleteTodo
 - it should have working controls for .toggleCompleted
 */
@@ -94,5 +94,10 @@ var handlers = {
 		todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
 		changeTodoPositionInput.value = '';
 		changeTodoTextInput.value = '';
+	},
+	deleteTodo: function() {
+		var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
+		todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
+		deleteTodoPositionInput.value = '';
 	}
 };
