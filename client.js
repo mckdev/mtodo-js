@@ -1,21 +1,23 @@
-/* V1.0 requirements
-+ there should be a way to create delete buttons
-+ there should be a delete button for every item
-+ each li should have an id that has the todo position
-+ delete buttons should have access to the todo id
-+ clicking delete should update todoList.todos and the DOM
-+ todoList.toggleAll should use forEach
-+ todoList.displayTodos should use forEach */
+if (JSON.parse(localStorage.getItem("todos")) === null) {
+	var todoStorage = [];
+} else {
+	var todoStorage = JSON.parse(localStorage.getItem("todos"));
+}
 
 var todoList = {
+	
+	todos: todoStorage,
 
-	todos: [],
-
+	updateStorage: function(todos) {
+		localStorage.setItem("todos", JSON.stringify(this.todos));
+	},
+	
 	addTodo: function(todoText) {
 		this.todos.push({
 			todoText: todoText,
 			completed: false
 		});
+		this.updateStorage();
 	},
 
 	changeTodo: function(position, todoText) {
@@ -68,8 +70,11 @@ var handlers = {
 	},
 	updateTodo: function(position) {
 		var changeTodoTextInput = document.getElementById('changeTodoTextInput');
-		todoList.changeTodo(position, changeTodoTextInput.value);
-		view.displayTodos();
+		if (changeTodoTextInput.value.replace(/ /g,'') === '') {
+		} else {
+			todoList.changeTodo(position, changeTodoTextInput.value);
+			view.displayTodos();
+		}
 	},
 	deleteTodo: function(position) {
 		todoList.deleteTodo(position);
@@ -148,6 +153,7 @@ var view = {
 		editInput.type = 'text';
 		editInput.value = todo.todoText;
 		editInput.id = 'changeTodoTextInput';
+		editInput.className += 'form-control';
 		return editInput;
 	},
 	createSaveButton: function() {
