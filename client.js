@@ -22,15 +22,18 @@ var todoList = {
 
 	changeTodo: function(position, todoText) {
 		this.todos[position].todoText = todoText;
+		this.updateStorage();
 	},
 
 	deleteTodo: function(position) {
 		this.todos.splice(position, 1);
+		this.updateStorage();
 	},
 
 	toggleCompleted: function(position) {
 		var todo = this.todos[position];
 		todo.completed = !todo.completed
+		this.updateStorage();
 	},
 
 	toggleAll: function() {
@@ -54,6 +57,7 @@ var todoList = {
 				todo.completed = true;
 			}
 		});
+		this.updateStorage();
 	}
 };
 
