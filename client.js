@@ -12,16 +12,18 @@ var todoList = {
 		localStorage.setItem("todos", JSON.stringify(this.todos));
 	},
 	
-	addTodo: function(todoText) {
+	addTodo: function(todoText, todoTag) {
 		this.todos.push({
 			todoText: todoText,
-			completed: false
+			completed: false,
+			todoTag: todoTag,
 		});
 		this.updateStorage();
 	},
 
-	changeTodo: function(position, todoText) {
+	changeTodo: function(position, todoText, todoTag) {
 		this.todos[position].todoText = todoText;
+		this.todos[position].todoTag = todoTag;
 		this.updateStorage();
 	},
 
@@ -65,18 +67,21 @@ var todoList = {
 var handlers = {
 	addTodo: function() {
 		var addTodoTextInput = document.getElementById('addTodoTextInput');
+		var addTodoTagInput = document.getElementById('addTodoTagInput');
 		if (addTodoTextInput.value.replace(/ /g,'') === '') {
 		} else {
-			todoList.addTodo(addTodoTextInput.value);
+			todoList.addTodo(addTodoTextInput.value, addTodoTagInput.value);
 			addTodoTextInput.value = '';
-			view.displayTodos();			
+			addTodoTagInput.value = '';
+			view.displayTodos();
 		}
 	},
 	updateTodo: function(position) {
 		var changeTodoTextInput = document.getElementById('changeTodoTextInput');
+		var changeTodoTagInput = document.getElementById('changeTodoTagInput');
 		if (changeTodoTextInput.value.replace(/ /g,'') === '') {
 		} else {
-			todoList.changeTodo(position, changeTodoTextInput.value);
+			todoList.changeTodo(position, changeTodoTextInput.value, changeTodoTagInput.value);
 			view.displayTodos();
 		}
 	},
@@ -108,17 +113,17 @@ var view = {
 			todoList.todos.forEach(function(todo, position) {
 				var todoLi = document.createElement('li');
 				todoLi.className = 'todoItem list-group-item';
-				var todoTextWithCompletion = '';
+				var todoTextWithTag = '';
 
 				if (todo.completed === true) {
 					todoLi.className += ' completed';
-					todoTextWithCompletion = todo.todoText;
+					todoTextWithTag = '[' + todo.todoTag + '] ' + todo.todoText;
 				} else {
-					todoTextWithCompletion = todo.todoText;
+					todoTextWithTag = '[' + todo.todoTag + '] '  + todo.todoText;
 				}
 
 				todoLi.id = position;
-				todoLi.textContent = todoTextWithCompletion;
+				todoLi.textContent = todoTextWithTag;
 				todoLi.appendChild(this.createCompleteButton());
 				todoLi.appendChild(this.createDeleteButton());
 				todoLi.appendChild(this.createEditButton());
@@ -130,7 +135,8 @@ var view = {
 		var todo = todoList.todos[position];
 		var todoLi = document.getElementById(position);
 		todoLi.innerHTML = '';
-		todoLi.appendChild(this.createEditInput(todo));
+		todoLi.appendChild(this.createEditTextInput(todo));
+		todoLi.appendChild(this.createEditTagInput(todo));
 		todoLi.appendChild(this.createSaveButton());
 		todoLi.appendChild(this.createCancelButton());
 	},
@@ -152,14 +158,24 @@ var view = {
 		editButton.className = 'editButton btn btn-sm btn-primary';
 		return editButton;
 	},
-	createEditInput: function(todo) {
-		var editInput = document.createElement('input');
-		editInput.type = 'text';
-		editInput.value = todo.todoText;
-		editInput.id = 'changeTodoTextInput';
-		editInput.className += 'form-control';
-		return editInput;
+	createEditTextInput: function(todo) {
+		var editTextInput = document.createElement('input');
+		editTextInput.type = 'text';
+		editTextInput.value = todo.todoText;
+		editTextInput.placeholder = 'Text...';
+		editTextInput.id = 'changeTodoTextInput';
+		editTextInput.className += 'form-control';
+		return editTextInput;
 	},
+	createEditTagInput: function(todo) {
+		var editTagInput = document.createElement('input');
+		editTagInput.type = 'text';
+		editTagInput.value = todo.todoTag;
+		editTagInput.placeholder = 'Tag...';
+		editTagInput.id = 'changeTodoTagInput';
+		editTagInput.className += 'form-control';
+		return editTagInput;
+	},	
 	createSaveButton: function() {
 		var saveButton = document.createElement('button');
 		saveButton.textContent = 'save';
