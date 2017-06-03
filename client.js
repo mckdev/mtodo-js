@@ -86,8 +86,11 @@ var handlers = {
 		}
 	},
 	deleteTodo: function(position) {
-		todoList.deleteTodo(position);
-		view.displayTodos();
+		if (confirm('Are you sure to DELETE this todo?')) {
+			todoList.deleteTodo(position);
+			view.displayTodos();		
+		};
+
 	},
 	toggleCompleted: function(position) {
 		todoList.toggleCompleted(position);
